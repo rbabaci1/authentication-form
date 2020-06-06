@@ -86,14 +86,6 @@ code {
       flex-direction: column;
       max-width: 600px;
 
-      .error-message {
-        font-size: 22px;
-        color: rgb(247, 66, 66);
-        background-color: rgb(52, 59, 59);
-        text-align: center;
-        padding: 7px 0;
-      }
-
       label {
         color: rgb(238, 223, 88);
         background-color: rgba(52, 59, 59, 0.8);
@@ -124,5 +116,13 @@ code {
     h1 {
       color: white;
     }
+  }
+
+  .error-message {
+    font-size: 22px;
+    color: rgb(247, 66, 66);
+    background-color: rgb(47, 51, 51);
+    text-align: center;
+    padding: 7px 0;
   }
 }
