@@ -28,7 +28,7 @@ export default function Form({ type, isLoading, error, onSubmit }) {
   return (
     <div className="form-wrapper">
       <form onSubmit={handleSubmit}>
-        {error && <p>{error}</p>}
+        {error && <p className="error-message">{error}</p>}
         <h2>{type}</h2>
 
         {type === "Signup" && (

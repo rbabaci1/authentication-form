@@ -17,7 +17,7 @@ export default function Users() {
     <div className="users">
       <h1>Welcome to Users!</h1>
 
-      {error && <span>{error}</span>}
+      {error && <p className="error-message">{error}</p>}
 
       {users.map(user => (
         <div className="user-card">
