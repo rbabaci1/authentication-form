@@ -33,7 +33,7 @@ function App() {
         history.push("/users");
       } catch (error) {
         setError("Invalid credentials, try again?");
-        console.log(error);
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -41,22 +41,32 @@ function App() {
   };
 
   const handleSignup = userInfo => {
-    axiosWithAuth()
-      .post("/auth/register", userInfo)
-      .then(res => {
-        const token = res.data.token;
+    setIsLoading(true);
 
-        localStorage.setItem("token", token);
-        history.push("/login");
-      })
-      .catch(err => console.error(err));
+    setTimeout(() => {
+      axiosWithAuth()
+        .post("/auth/register", userInfo)
+        .then(res => {
+          const token = res.data.token;
+
+          setIsLoading(false);
+          localStorage.setItem("token", token);
+          history.push("/users");
+        })
+        .catch(err => console.error(err));
+    }, 1500);
   };
 
   const handleLogout = () => {
-    setAuthenticated(false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("authenticated");
-    history.push("/");
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      setAuthenticated(false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("authenticated");
+      history.push("/");
+    }, 1500);
   };
 
   return (
@@ -77,12 +87,17 @@ function App() {
             <NavLink to="/login" activeClassName="active">
               Login
             </NavLink>
+
             <NavLink to="/signup">Signup</NavLink>
           </section>
         ) : (
-          <Link to="/" onClick={handleLogout}>
-            Logout
-          </Link>
+          <section>
+            <NavLink to="/users">Users</NavLink>
+
+            <NavLink exact to="/" onClick={handleLogout}>
+              {isLoading ? "...Logging Out" : "Logout"}
+            </NavLink>
+          </section>
         )}
       </div>
 

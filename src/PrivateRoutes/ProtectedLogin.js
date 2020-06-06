@@ -6,7 +6,6 @@ export default function ProtectedUsers({
   component: Component,
   ...rest
 }) {
-  console.log(authenticated);
   return (
     <Route
       {...rest}

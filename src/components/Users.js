@@ -21,24 +21,26 @@ export default function Users() {
   }, []);
 
   return (
-    <div className="users">
+    <div className="users-wrapper">
       <h1>Welcome to Users!</h1>
 
       {error && <p className="error-message">{error}</p>}
 
-      {users.map(user => (
-        <div className="user-card">
-          <h2>
-            First Name: <span>{user.firstName}</span>
-          </h2>
-          <h2>
-            Last Name: <span>{user.lastName}</span>
-          </h2>
-          <h2>
-            Username: <span>{user.username}</span>
-          </h2>
-        </div>
-      ))}
+      <div className="users">
+        {users.map(user => (
+          <div className="user-card" key={user.id}>
+            <h2>
+              First Name: <span>{user.firstName}</span>
+            </h2>
+            <h2>
+              Last Name: <span>{user.lastName}</span>
+            </h2>
+            <h2>
+              Username: <span>{user.username}</span>
+            </h2>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
