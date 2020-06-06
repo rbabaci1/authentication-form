@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Route, Link, NavLink, useHistory } from "react-router-dom";
-import axios from "axios";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 import Form from "./components/Form";
 import Users from "./components/Users";
@@ -19,10 +19,7 @@ function App() {
 
     setTimeout(async () => {
       try {
-        const res = await axios.post(
-          "https://db-users-auth.herokuapp.com/api/auth/login",
-          userInfo
-        );
+        const res = await axiosWithAuth().post("/auth/login", userInfo);
 
         console.log(res);
 
@@ -38,8 +35,8 @@ function App() {
   };
 
   const handleSignup = userInfo => {
-    axios
-      .post("https://db-users-auth.herokuapp.com/api/auth/register", userInfo)
+    axiosWithAuth()
+      .post("/auth/register", userInfo)
       .then(r => console.log(r))
       .catch(err => console.error(err));
   };

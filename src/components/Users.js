@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import axios from "axios";
+import axiosWithAuth from "../../utils/axiosWithAuth";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://db-users-auth.herokuapp.com/api/users", {
-        withCredentials: true,
-      })
+    axiosWithAuth
+      .get("/users")
       .then(res => console.log(res))
       .catch(err => console.error(err));
   }, []);
