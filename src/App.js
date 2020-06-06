@@ -7,9 +7,12 @@ import Users from "./components/Users";
 import ProtectedUsers from "./PrivateRoutes/ProtectedUsers";
 import ProtectedLogin from "./PrivateRoutes/ProtectedLogin";
 import ProtectedSignup from "./PrivateRoutes/ProtectedSignup";
+import getFromLocalStorage from "./utils/getFromLocalStorage";
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(
+    getFromLocalStorage("authenticated")
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -25,6 +28,7 @@ function App() {
         const token = res.data.token;
 
         localStorage.setItem("token", token);
+        localStorage.setItem("authenticated", JSON.stringify(true));
         setAuthenticated(true);
         history.push("/users");
       } catch (error) {
@@ -51,6 +55,7 @@ function App() {
   const handleLogout = () => {
     setAuthenticated(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("authenticated");
     history.push("/");
   };
 
