@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const initialState = {
   firstName: "",
   lastName: "",
+  department: "",
   username: "",
   password: "",
 };
@@ -50,6 +51,20 @@ export default function Form({ type, isLoading, error, onSubmit }) {
               required
             />
           </div>
+        )}
+
+        {type === "Signup" && (
+          <>
+            <label htmlFor="department">Enter department name:</label>
+            <input
+              onChange={handleChange}
+              type="text"
+              placeholder="Department"
+              name="department"
+              value={formInfo.department}
+              required
+            />
+          </>
         )}
 
         <label htmlFor="username">Enter Username:</label>
