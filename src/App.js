@@ -20,11 +20,11 @@ function App() {
     setTimeout(async () => {
       try {
         const res = await axiosWithAuth().post("/auth/login", userInfo);
+        const token = res.data.token;
 
-        console.log(res);
-
+        localStorage.setItem("token", token);
         setAuthenticated(true);
-        // history.push("/users");
+        history.push("/users");
       } catch (error) {
         setError("Can't Login, try again?");
         console.error(error);
@@ -37,7 +37,12 @@ function App() {
   const handleSignup = userInfo => {
     axiosWithAuth()
       .post("/auth/register", userInfo)
-      .then(r => console.log(r))
+      .then(res => {
+        const token = res.data.token;
+
+        localStorage.setItem("token", token);
+        history.push("/login");
+      })
       .catch(err => console.error(err));
   };
 
