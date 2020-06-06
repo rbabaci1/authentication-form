@@ -4,17 +4,21 @@ import axiosWithAuth from "../utils/axiosWithAuth";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     axiosWithAuth()
       .get("/users")
       .then(res => console.log(res))
-      .catch(err => console.error(err));
+      .catch(err => console.log(err));
   }, []);
 
   return (
     <div className="users">
       <h1>Welcome to Users!</h1>
+
+      {error && <span>{error}</span>}
+
       {users.map(user => (
         <div className="user-card">
           <h2>
