@@ -5,6 +5,8 @@ import axiosWithAuth from "./utils/axiosWithAuth";
 import Form from "./components/Form";
 import Users from "./components/Users";
 import ProtectedUsers from "./PrivateRoutes/ProtectedUsers";
+import ProtectedLogin from "./PrivateRoutes/ProtectedLogin";
+import ProtectedSignup from "./PrivateRoutes/ProtectedSignup";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -26,8 +28,8 @@ function App() {
         setAuthenticated(true);
         history.push("/users");
       } catch (error) {
-        setError("Can't Login, try again?");
-        console.error(error);
+        setError("Invalid credentials, try again?");
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
@@ -46,6 +48,12 @@ function App() {
       .catch(err => console.error(err));
   };
 
+  const handleLogout = () => {
+    setAuthenticated(false);
+    localStorage.removeItem("token");
+    history.push("/");
+  };
+
   return (
     <div className="App">
       <Route exact path="/" render={() => <h1>Welcome home</h1>} />
@@ -59,30 +67,38 @@ function App() {
           </Link>
         </section>
 
-        <section className="login-signup">
-          <NavLink to="/login" activeClassName="active">
-            Login
-          </NavLink>
-          <NavLink to="/signup">Signup</NavLink>
-        </section>
+        {!authenticated ? (
+          <section className="login-signup">
+            <NavLink to="/login" activeClassName="active">
+              Login
+            </NavLink>
+            <NavLink to="/signup">Signup</NavLink>
+          </section>
+        ) : (
+          <Link to="/" onClick={handleLogout}>
+            Logout
+          </Link>
+        )}
       </div>
 
-      <Route
-        exact
+      <ProtectedLogin
         path="/login"
-        render={() => (
-          <Form
-            type="Login"
-            isLoading={isLoading}
-            error={error}
-            onSubmit={handleLogin}
-          />
-        )}
+        authenticated={authenticated}
+        type="Login"
+        isLoading={isLoading}
+        error={error}
+        onSubmit={handleLogin}
+        component={Form}
       />
-      <Route
-        exact
+
+      <ProtectedSignup
         path="/signup"
-        render={() => <Form type="Signup" onSubmit={handleSignup} />}
+        authenticated={authenticated}
+        type="Signup"
+        isLoading={isLoading}
+        error={error}
+        onSubmit={handleSignup}
+        component={Form}
       />
 
       <ProtectedUsers

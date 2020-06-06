@@ -4,7 +4,7 @@ const axiosWithAuth = () =>
   axios.create({
     baseURL: "https://auth-users-tokens.herokuapp.com/api",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Beares ${localStorage.getItem("token")}`,
     },
   });
 

@@ -9,8 +9,15 @@ export default function Users() {
   useEffect(() => {
     axiosWithAuth()
       .get("/users")
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => {
+        setError("");
+        setUsers(res.data.users);
+      })
+      .catch(() =>
+        setError(
+          "Users can not be loaded at the moment. Refresh the page in a second."
+        )
+      );
   }, []);
 
   return (
