@@ -6,7 +6,7 @@ export default function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axiosWithAuth
+    axiosWithAuth()
       .get("/users")
       .then(res => console.log(res))
       .catch(err => console.error(err));
