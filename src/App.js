@@ -24,7 +24,7 @@ function App() {
         console.log(res);
 
         setAuthenticated(true);
-        history.push("/users");
+        // history.push("/users");
       } catch (error) {
         setError("Can't Login, try again?");
         console.error(error);
