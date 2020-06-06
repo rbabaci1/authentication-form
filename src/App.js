@@ -20,7 +20,7 @@ function App() {
     setTimeout(async () => {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/auth/login",
+          "https://db-users-auth.herokuapp.com/api/auth/login",
           userInfo
         );
 
@@ -39,7 +39,7 @@ function App() {
 
   const handleSignup = userInfo => {
     axios
-      .post("http://localhost:5000/api/auth/register", userInfo)
+      .post("https://db-users-auth.herokuapp.com/api/auth/register", userInfo)
       .then(r => console.log(r))
       .catch(err => console.error(err));
   };

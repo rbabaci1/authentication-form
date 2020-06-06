@@ -7,7 +7,9 @@ export default function Users() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/users", { withCredentials: true })
+      .get("https://db-users-auth.herokuapp.com/api/users", {
+        withCredentials: true,
+      })
       .then(res => console.log(res))
       .catch(err => console.error(err));
   }, []);
