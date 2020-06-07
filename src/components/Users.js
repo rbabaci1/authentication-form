@@ -3,14 +3,15 @@ import { withRouter } from "react-router-dom";
 
 import axiosWithAuth from "../utils/axiosWithAuth";
 
-function Users() {
+function Users({ location }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const firstName = localStorage.getItem("loggedUser");
+  const userDepartment = location.state;
 
   useEffect(() => {
     axiosWithAuth()
-      .get("/users")
+      .get(`/users?department=${userDepartment}`)
       .then(res => {
         setError("");
         setUsers(res.data.users);
@@ -20,7 +21,7 @@ function Users() {
           "Users can not be loaded at the moment. Refresh the page in a second."
         )
       );
-  }, []);
+  }, [userDepartment]);
 
   return (
     <div className="users-wrapper">

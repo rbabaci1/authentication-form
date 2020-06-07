@@ -32,7 +32,10 @@ function App() {
         setAuthenticated(true);
         localStorage.setItem("loggedUser", user.firstName);
 
-        history.push("/users");
+        history.push({
+          pathname: "/users",
+          state: user.department,
+        });
       } catch (error) {
         setError("Invalid credentials. Try again?");
         console.error(error);
@@ -56,7 +59,10 @@ function App() {
         setAuthenticated(true);
         localStorage.setItem("loggedUser", addedUser.firstName);
 
-        history.push("/users");
+        history.push({
+          pathname: "/users",
+          state: addedUser.department,
+        });
       } catch (err) {
         setError("Registration failed. Try again?");
         console.error(err);
