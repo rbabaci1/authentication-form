@@ -10,7 +10,16 @@ export default function ProtectedUsers({
     <Route
       {...rest}
       render={() =>
-        authenticated ? <Component {...rest} /> : <Redirect to="/login" />
+        authenticated ? (
+          <Component {...rest} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: true,
+            }}
+          />
+        )
       }
     />
   );

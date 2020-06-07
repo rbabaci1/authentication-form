@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 
 const initialState = {
   firstName: "",
@@ -8,9 +9,10 @@ const initialState = {
   password: "",
 };
 
-export default function Form({ action, isLoading, error, onSubmit }) {
+function Form({ action, isLoading, error, onSubmit, location }) {
   const [formInfo, setFormInfo] = useState(initialState);
   const { username, password } = formInfo;
+  const redirected = location.state ? true : false;
 
   const handleChange = e => {
     setFormInfo({
@@ -30,6 +32,10 @@ export default function Form({ action, isLoading, error, onSubmit }) {
     <div className="form-wrapper">
       <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
+        {redirected && (
+          <p className="error-message">Don't be a smart ass. Login first</p>
+        )}
+
         <h2>{action}</h2>
 
         {action === "Signup" && (
@@ -95,3 +101,5 @@ export default function Form({ action, isLoading, error, onSubmit }) {
     </div>
   );
 }
+
+export default withRouter(Form);

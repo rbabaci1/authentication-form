@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 
 import axiosWithAuth from "../utils/axiosWithAuth";
 
-function Users({ location }) {
+function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const firstName = localStorage.getItem("loggedUser");
