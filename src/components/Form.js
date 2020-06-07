@@ -87,7 +87,7 @@ function Form({ action, isLoading, error, onSubmit, location }) {
         <label htmlFor="password">Enter Password:</label>
         <input
           onChange={handleChange}
-          type="text"
+          type="password"
           placeholder="Password"
           name="password"
           value={formInfo.password}
