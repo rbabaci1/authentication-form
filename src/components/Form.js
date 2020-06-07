@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 const initialState = {
   firstName: "",
   lastName: "",
-  department: "",
   username: "",
   password: "",
 };
@@ -58,20 +57,6 @@ function Form({ action, isLoading, error, onSubmit, location }) {
               required
             />
           </div>
-        )}
-
-        {action === "Signup" && (
-          <>
-            <label htmlFor="department">Enter department name:</label>
-            <input
-              onChange={handleChange}
-              type="text"
-              placeholder="Department"
-              name="department"
-              value={formInfo.department}
-              required
-            />
-          </>
         )}
 
         <label htmlFor="username">Enter Username:</label>

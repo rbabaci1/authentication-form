@@ -2,10 +2,7 @@ import axios from "axios";
 
 const axiosWithAuth = () =>
   axios.create({
-    baseURL: "https://auth-users-tokens.herokuapp.com/api",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
+    baseURL: "https://db-users-auth.herokuapp.com/api",
   });
 
 export default axiosWithAuth;
