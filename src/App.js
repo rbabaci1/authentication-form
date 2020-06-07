@@ -54,7 +54,7 @@ function App() {
         localStorage.setItem("loggedUser", addedUser.firstName);
 
         setAuthenticated(true);
-        history.push("/users");
+        history.push("/login");
       } catch (err) {
         setError("Registration failed. Try again?");
         console.error(err);
