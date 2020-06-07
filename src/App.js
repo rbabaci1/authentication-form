@@ -29,13 +29,11 @@ function App() {
 
         localStorage.setItem("token", token);
         localStorage.setItem("authenticated", JSON.stringify(true));
-        setAuthenticated(true);
         localStorage.setItem("loggedUser", user.firstName);
+        localStorage.setItem("userDepartment", user.department);
 
-        history.push({
-          pathname: "/users",
-          state: user.department,
-        });
+        setAuthenticated(true);
+        history.push("/users");
       } catch (error) {
         setError("Invalid credentials. Try again?");
         console.error(error);
@@ -56,9 +54,10 @@ function App() {
 
         localStorage.setItem("token", token);
         localStorage.setItem("authenticated", JSON.stringify(true));
-        setAuthenticated(true);
         localStorage.setItem("loggedUser", addedUser.firstName);
+        localStorage.setItem("userDepartment", addedUser.department);
 
+        setAuthenticated(true);
         history.push({
           pathname: "/users",
           state: addedUser.department,
@@ -82,6 +81,7 @@ function App() {
       localStorage.removeItem("token");
       localStorage.removeItem("authenticated");
       localStorage.removeItem("loggedUser");
+      localStorage.removeItem("userDepartment");
       history.push("/");
     }, 1500);
   };
