@@ -8,7 +8,7 @@ const initialState = {
   password: "",
 };
 
-export default function Form({ type, isLoading, error, onSubmit }) {
+export default function Form({ action, isLoading, error, onSubmit }) {
   const [formInfo, setFormInfo] = useState(initialState);
   const { username, password } = formInfo;
 
@@ -21,7 +21,8 @@ export default function Form({ type, isLoading, error, onSubmit }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(type === "Login" ? { username, password } : formInfo);
+
+    onSubmit(action === "Login" ? { username, password } : formInfo);
     setFormInfo(initialState);
   };
 
@@ -29,9 +30,9 @@ export default function Form({ type, isLoading, error, onSubmit }) {
     <div className="form-wrapper">
       <form onSubmit={handleSubmit}>
         {error && <p className="error-message">{error}</p>}
-        <h2>{type}</h2>
+        <h2>{action}</h2>
 
-        {type === "Signup" && (
+        {action === "Signup" && (
           <div className="fullName">
             <input
               onChange={handleChange}
@@ -53,7 +54,7 @@ export default function Form({ type, isLoading, error, onSubmit }) {
           </div>
         )}
 
-        {type === "Signup" && (
+        {action === "Signup" && (
           <>
             <label htmlFor="department">Enter department name:</label>
             <input
@@ -87,7 +88,9 @@ export default function Form({ type, isLoading, error, onSubmit }) {
           required
         />
 
-        <button disabled={isLoading}>{isLoading ? "Loading..." : type}</button>
+        <button disabled={isLoading}>
+          {isLoading ? "Loading..." : action}
+        </button>
       </form>
     </div>
   );

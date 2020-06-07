@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 
 import axiosWithAuth from "../utils/axiosWithAuth";
 
-export default function Users() {
+function Users({ location }) {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const firstName = localStorage.getItem("loggedUser");
 
   useEffect(() => {
     axiosWithAuth()
@@ -22,7 +24,9 @@ export default function Users() {
 
   return (
     <div className="users-wrapper">
-      <h1>Welcome to Users!</h1>
+      <h1>
+        Welcome home <span id="logged-user">{firstName}</span>
+      </h1>
 
       {error && <p className="error-message">{error}</p>}
 
@@ -44,3 +48,4 @@ export default function Users() {
     </div>
   );
 }
+export default withRouter(Users);

@@ -15,7 +15,6 @@ function App() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
   const history = useHistory();
 
   const handleLogin = userInfo => {
@@ -25,14 +24,16 @@ function App() {
     setTimeout(async () => {
       try {
         const res = await axiosWithAuth().post("/auth/login", userInfo);
-        const token = res.data.token;
+        const { user, token } = res.data;
 
         localStorage.setItem("token", token);
         localStorage.setItem("authenticated", JSON.stringify(true));
         setAuthenticated(true);
+        localStorage.setItem("loggedUser", user.firstName);
+
         history.push("/users");
       } catch (error) {
-        setError("Invalid credentials, try again?");
+        setError("Invalid credentials. Try again?");
         console.error(error);
       } finally {
         setIsLoading(false);
@@ -42,18 +43,25 @@ function App() {
 
   const handleSignup = userInfo => {
     setIsLoading(true);
+    setError("");
 
-    setTimeout(() => {
-      axiosWithAuth()
-        .post("/auth/register", userInfo)
-        .then(res => {
-          const token = res.data.token;
+    setTimeout(async () => {
+      try {
+        const res = await axiosWithAuth().post("/auth/register", userInfo);
+        const { addedUser, token } = res.data;
 
-          setIsLoading(false);
-          localStorage.setItem("token", token);
-          history.push("/users");
-        })
-        .catch(err => console.error(err));
+        localStorage.setItem("token", token);
+        localStorage.setItem("authenticated", JSON.stringify(true));
+        setAuthenticated(true);
+        localStorage.setItem("loggedUser", addedUser.firstName);
+
+        history.push("/users");
+      } catch (err) {
+        setError("Registration failed. Try again?");
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
     }, 1500);
   };
 
@@ -63,8 +71,10 @@ function App() {
     setTimeout(() => {
       setIsLoading(false);
       setAuthenticated(false);
+
       localStorage.removeItem("token");
       localStorage.removeItem("authenticated");
+      localStorage.removeItem("loggedUser");
       history.push("/");
     }, 1500);
   };
@@ -92,7 +102,7 @@ function App() {
           </section>
         ) : (
           <section>
-            <NavLink to="/users">Users</NavLink>
+            {!isLoading && <NavLink to="/users">Users</NavLink>}
 
             <NavLink exact to="/" onClick={handleLogout}>
               {isLoading ? "...Logging Out" : "Logout"}
@@ -104,7 +114,7 @@ function App() {
       <ProtectedLogin
         path="/login"
         authenticated={authenticated}
-        type="Login"
+        action="Login"
         isLoading={isLoading}
         error={error}
         onSubmit={handleLogin}
@@ -114,7 +124,7 @@ function App() {
       <ProtectedSignup
         path="/signup"
         authenticated={authenticated}
-        type="Signup"
+        action="Signup"
         isLoading={isLoading}
         error={error}
         onSubmit={handleSignup}
