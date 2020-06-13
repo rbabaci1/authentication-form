@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosWithAuth = () =>
   axios.create({
-    baseURL: "https://auth-users-tokens.herokuapp.com/api",
+    baseURL: "https://users-auth-postgres.herokuapp.com/api",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
