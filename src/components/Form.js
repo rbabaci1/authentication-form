@@ -24,7 +24,7 @@ function Form({ action, isLoading, error, onSubmit, location }) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmit(action === "Login" ? { username, password } : formInfo);
+    onSubmit({ username, password });
     setFormInfo(initialState);
   };
 
