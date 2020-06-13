@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const axiosWithAuth = () =>
-  axios.create({
+const axiosWithAuth = () => {
+  const token = localStorage.getItem("token");
+
+  return axios.create({
     baseURL: "https://sprint-stretch.herokuapp.com/api",
     headers: {
-      Authorization: localStorage.getItem("token"),
+      Authorization: token,
     },
   });
+};
 
 export default axiosWithAuth;
