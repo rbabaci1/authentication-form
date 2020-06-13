@@ -25,12 +25,11 @@ function App() {
     setTimeout(async () => {
       try {
         const res = await axiosWithAuth().post("/auth/login", userInfo);
+        console.log(res);
         const { user, token } = res.data;
 
         localStorage.setItem("token", token);
         localStorage.setItem("authenticated", JSON.stringify(true));
-        localStorage.setItem("loggedUser", user.firstName);
-        localStorage.setItem("userDepartment", user.department);
 
         setAuthenticated(true);
         history.push("/users");
@@ -50,18 +49,13 @@ function App() {
     setTimeout(async () => {
       try {
         const res = await axiosWithAuth().post("/auth/register", userInfo);
-        const { addedUser, token } = res.data;
+        const token = res.data.token;
 
         localStorage.setItem("token", token);
         localStorage.setItem("authenticated", JSON.stringify(true));
-        localStorage.setItem("loggedUser", addedUser.firstName);
-        localStorage.setItem("userDepartment", addedUser.department);
 
         setAuthenticated(true);
-        history.push({
-          pathname: "/users",
-          state: addedUser.department,
-        });
+        history.push("/users");
       } catch (err) {
         setError("Registration failed. Try again?");
         console.error(err);
@@ -80,8 +74,7 @@ function App() {
 
       localStorage.removeItem("token");
       localStorage.removeItem("authenticated");
-      localStorage.removeItem("loggedUser");
-      localStorage.removeItem("userDepartment");
+
       history.push("/");
     }, 1500);
   };

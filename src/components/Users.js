@@ -4,44 +4,32 @@ import { withRouter } from "react-router-dom";
 import axiosWithAuth from "../utils/axiosWithAuth";
 
 function Users() {
-  const [users, setUsers] = useState([]);
+  const [jokes, setJokes] = useState([]);
   const [error, setError] = useState("");
-  const firstName = localStorage.getItem("loggedUser");
-  const userDepartment = localStorage.getItem("userDepartment");
 
   useEffect(() => {
     axiosWithAuth()
-      .get(`/users?department=${userDepartment}`)
+      .get("/jokes")
       .then(res => {
         setError("");
-        setUsers(res.data.users);
+        setJokes(res.data);
       })
       .catch(() =>
         setError(
           "Users can not be loaded at the moment. Refresh the page in a second."
         )
       );
-  }, [userDepartment]);
+  }, []);
 
   return (
     <div className="users-wrapper">
-      <h1>
-        Welcome home <span id="logged-user">{firstName}</span>
-      </h1>
-
       {error && <p className="error-message">{error}</p>}
 
       <div className="users">
-        {users.map(user => (
-          <div className="user-card" key={user.id}>
+        {jokes.map(joke => (
+          <div className="user-card" key={joke.id}>
             <h2>
-              First Name: <span>{user.firstName}</span>
-            </h2>
-            <h2>
-              Last Name: <span>{user.lastName}</span>
-            </h2>
-            <h2>
-              Username: <span>{user.username}</span>
+              Joke: <span>{joke.joke}</span>
             </h2>
           </div>
         ))}
